@@ -8,17 +8,30 @@ pipeline {
     }
    
     stages {
+
         stage('Cloning Git') {
             steps {
-                git credentialsId: '2a67722f-b565-4098-a029-ed6bb84aa768', url: 'https://github.com/navitascomet2/springboot-demo-app'   
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [], submoduleCfg: [],
+                    userRemoteConfigs: [
+                        [
+                            credentialsId: 'github', 
+                            url: 'https://github.com/navitascomet2/springboot-demo-app'
+                        ]
+                    ]
+                ])     
             }
         }
-      stage ('Build') {
-          steps {
-            sh 'mvn clean install'           
-            }
-      }
-    // Building Docker images
+
+        stage ('Build') {
+            steps {
+                sh 'mvn clean install'           
+                }
+        }
+        // Building Docker images
     // stage('Building image') {
     //   steps{
     //     script {
