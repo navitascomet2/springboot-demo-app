@@ -40,19 +40,9 @@ pipeline {
     
                 // }
 
-//                 node {
-//   stage('SCM') {
-//     checkout scm
-//   }
-//   stage('SonarQube Analysis') {
-//     def mvn = tool 'Default Maven';
-//     withSonarQubeEnv() {
-//       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 -Dsonar.projectName='springboot-demo-app'"
-//     }
-//   }
-// }
+                }
             }
-        }
+        }    
 
         // stage('Sonar Analysis') {
         //     steps{
