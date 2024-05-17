@@ -378,22 +378,29 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
+                <version>1.1.1.1157</version>
                 <executions>
                     <execution>
-                        <id>jacoco-initialize</id>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <phase>test-compile</phase>
                     </execution>
                     <execution>
-                        <id>jacoco-site</id>
-                        <phase>prepare-package</phase>
+                        <id>report</id>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <phase>test</phase>
                     </execution>
-                </executions>
+                    </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                 <version>3.9.6</version>
             </plugin>
 
             <!--Specify the encoding for copying resources-->
