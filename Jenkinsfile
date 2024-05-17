@@ -38,7 +38,6 @@ pipeline {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot-demo-app \
                     -Dsonar.java.binaries=. \
                     -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
-    
                 }
 
                 }
@@ -52,9 +51,26 @@ pipeline {
                     }
                 }
 
+                def qualitygate = waitForQualityGate()
+                if (qualitygate.status != "OK") {
+                    error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+                }
             }                
         
         }
+
+//         stage ("SonarQube analysis") {
+//    steps {
+//       withSonarQubeEnv('SonarQube') {
+//          sh "../../../sonar-scanner-2.9.0.670/bin/sonar-scanner"   
+//       }
+
+//       def qualitygate = waitForQualityGate()
+//       if (qualitygate.status != "OK") {
+//          error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+//       }
+//    }
+// }
         // stage("OWASP Dependency Check"){
         //     steps{
         //         dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
