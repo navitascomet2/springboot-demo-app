@@ -34,6 +34,7 @@ pipeline {
             steps{
                 withSonarQubeEnv('sonar-server') {
                     // sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 -Dsonar.projectName='springboot-demo-app'"
+                    sh "mvn clean package"
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot-demo-app \
                     -Dsonar.java.binaries=. \
                     -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
@@ -42,19 +43,13 @@ pipeline {
 
                 }
             }
-           
-
-        // stage('Sonar Analysis') {
-        //     steps{
-        //         sh "mvn clean package"
-        //         sh ''' mvn sonar:sonar -Dsonar.url=http://a6a017adc86c74cb68390aa4795aeb85-1012135430.us-east-1.elb.amazonaws.com:9000 -Dsonar.login=squ_69108bc2b4771fa12ead8d2a844cfe158630cc26
-        //            -Dsonar.java.binaries=. \
-        //            -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
-        //     }
-        // }          
-        
-        
-        
+        stage("Quality Gate"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }         
         
         
         // stage("OWASP Dependency Check"){
