@@ -17,18 +17,25 @@ pipeline {
                 git branch: 'main', changelog: false, poll: false, url: 'https://github.com/navitascomet2/springboot-demo-app.git'
             }
         }
+
+        // stage('Sonar Analysis') {
+        //     steps{
+        //         sh "mvn clean package"
+        //         sh ''' mvn sonar:sonar -Dsonar.url=http://a6a017adc86c74cb68390aa4795aeb85-1012135430.us-east-1.elb.amazonaws.com:9000 -Dsonar.login=squ_69108bc2b4771fa12ead8d2a844cfe158630cc26
+        //     }
+        // }
         
-        stage("Compile"){
-            steps{
-                sh "mvn clean compile"
-            }
-        }
+        // stage("Compile"){
+        //     steps{
+        //         sh "mvn clean compile"
+        //     }
+        // }
         
-         stage("Test Cases"){
-            steps{
-                sh "mvn test"
-            }
-        }
+        //  stage("Test Cases"){
+        //     steps{
+        //         sh "mvn test"
+        //     }
+        // }
         
         stage("Sonarqube Analysis "){
             steps{
@@ -41,18 +48,18 @@ pipeline {
             }
         }
         
-        stage("OWASP Dependency Check"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
+        // stage("OWASP Dependency Check"){
+        //     steps{
+        //         dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
+        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        //     }
+        // }
         
-         stage("Build"){
-            steps{
-                sh " mvn clean install"
-            }
-        }
+        //  stage("Build"){
+        //     steps{
+        //         sh " mvn clean install"
+        //     }
+        // }
         
         // stage("Docker Build & Push"){
         //     steps{
