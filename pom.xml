@@ -378,7 +378,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>1.1.1.1157</version>
+                <version>0.8.9</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -400,7 +400,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                 <version>3.9.6</version>
+                <version>3.7.0.1746</version>
             </plugin>
 
             <!--Specify the encoding for copying resources-->
@@ -556,7 +556,7 @@
             <id>SonarQube</id>
             <properties>
                 <!-- Jacoco Properties -->
-                <jacoco.version>0.8.6</jacoco.version>
+                <jacoco.version>0.8.9</jacoco.version>
                 <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
@@ -566,7 +566,7 @@
                 <dependency>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.6</version>                    
+                    <version>0.8.9</version>                    
                 </dependency>
             </dependencies>
         </profile>
