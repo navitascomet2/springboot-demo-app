@@ -45,30 +45,19 @@ pipeline {
         
         stage("Quality Gate") {
             steps {
-              timeout(time: 1, unit: 'HOURS') {
+              timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
             }
           }
 
-//         stage ("SonarQube analysis") {
-//    steps {
-//       withSonarQubeEnv('SonarQube') {
-//          sh "../../../sonar-scanner-2.9.0.670/bin/sonar-scanner"   
-//       }
 
-//       def qualitygate = waitForQualityGate()
-//       if (qualitygate.status != "OK") {
-//          error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-//       }
-//    }
-// }
-        // stage("OWASP Dependency Check"){
-        //     steps{
-        //         dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
-        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        //     }
-        // }
+        stage("OWASP Dependency Check"){
+            steps{
+                dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
         
         //  stage("Build"){
         //     steps{
