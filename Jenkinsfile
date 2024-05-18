@@ -39,44 +39,21 @@ pipeline {
                     -Dsonar.java.binaries=. \
                     -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
                 }
-                if ("${json.projectStatus.status}" == "ERROR") {
-                            currentBuild.result = 'FAILURE'
-                            error('Pipeline aborted due to quality gate failure.')
-                    }
-
             }
         }
-
-        // stage("Quality Gate"){
-        //     options {
-        //         timeout(time: 5, unit: 'MINUTES') 
-        //     }
-        //     steps {
-        //         script {
-        //             def qg = waitForQualityGate()
-        //             if (qg.status != 'OK') {
-        //                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
-        //         }
-        //      }
-        //    }
-        // }
         
-        // stage("Quality Gate") {
-        //     steps {
-        //       timeout(time: 5, unit: 'MINUTES') {
-        //         // waitForQualityGate abortPipeline: true
-        //         waitForQualityGate abortPipeline: false, credentialsId: 'qualitygate'
-        //       }
-        //     }
-        //   }
-
-
-        stage("OWASP Dependency Check"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        stage("Quality Gate") {
+            timeout(time: 1, unit: 'HOURS') {
+            waitForQualityGate abortPipeline: true
             }
         }
+
+        // stage("OWASP Dependency Check"){
+        //     steps{
+        //         dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
+        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        //     }
+        // }
         
         //  stage("Build"){
         //     steps{
