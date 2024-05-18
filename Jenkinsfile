@@ -40,16 +40,25 @@ pipeline {
                     -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
                 }
 
-                }
             }
-        
-        stage("Quality Gate") {
-            steps {
-              timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
+        }
+
+        stage("Quality Gate"){
+          timeout(time: 4, unit: 'MINUTES) {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
               }
-            }
-          }
+        }
+        
+        // stage("Quality Gate") {
+        //     steps {
+        //       timeout(time: 5, unit: 'MINUTES') {
+        //         // waitForQualityGate abortPipeline: true
+        //         waitForQualityGate abortPipeline: false, credentialsId: 'qualitygate'
+        //       }
+        //     }
+        //   }
 
 
         stage("OWASP Dependency Check"){
