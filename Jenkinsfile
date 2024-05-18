@@ -39,23 +39,27 @@ pipeline {
                     -Dsonar.java.binaries=. \
                     -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
                 }
+                if ("${json.projectStatus.status}" == "ERROR") {
+                            currentBuild.result = 'FAILURE'
+                            error('Pipeline aborted due to quality gate failure.')
+                    }
 
             }
         }
 
-        stage("Quality Gate"){
-            options {
-                timeout(time: 5, unit: 'MINUTES') 
-            }
-            steps {
-                script {
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                }
-             }
-           }
-        }
+        // stage("Quality Gate"){
+        //     options {
+        //         timeout(time: 5, unit: 'MINUTES') 
+        //     }
+        //     steps {
+        //         script {
+        //             def qg = waitForQualityGate()
+        //             if (qg.status != 'OK') {
+        //                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        //         }
+        //      }
+        //    }
+        // }
         
         // stage("Quality Gate") {
         //     steps {
