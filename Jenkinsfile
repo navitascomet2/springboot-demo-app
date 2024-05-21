@@ -37,23 +37,14 @@ pipeline {
                     sh "mvn clean package"
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot-demo-app \
                     -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=springboot-sonar '''
-
-                    // sh '''
-                    //     mvn clean verify sonar:sonar \
-                    //     -Dsonar.projectKey=springboot-demo-app \
-                    //     -Dsonar.projectName='springboot-demo-app' \
-                    //     -Dsonar.host.url=http://a7875a6e4d9de4c6fb298514e735c940-318779241.us-east-1.elb.amazonaws.com:9000 \
-                    //     -Dsonar.token=sqp_801357c627a6ce5787ba113270363d042052fa37
-
-                    // '''
+                    -Dsonar.projectKey=springboot-sonar '''                    
                 }
             }
         }
         
         stage("Quality Gate") {
             steps {
-              timeout(time: 1, unit: 'HOURS') {
+              timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
             }
