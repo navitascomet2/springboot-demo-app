@@ -30,25 +30,34 @@ pipeline {
             }
         }
 
-        // stage("Sonarqube Analysis "){
-        //     steps{
-        //         withSonarQubeEnv('sonar-server') {
-        //             // sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 -Dsonar.projectName='springboot-demo-app'"
-        //             sh "mvn clean package"
-        //             sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot-demo-app \
-        //             -Dsonar.java.binaries=. \
-        //             -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
-        //         }
-        //     }
-        // }
+        stage("Sonarqube Analysis "){
+            steps{
+                withSonarQubeEnv('sonar-server') {
+                    // sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 -Dsonar.projectName='springboot-demo-app'"
+                    // sh "mvn clean package"
+                    // sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot-demo-app \
+                    // -Dsonar.java.binaries=. \
+                    // -Dsonar.projectKey=navitascomet2_springboot-demo-app_7a1fdab9-4d6f-4f4a-8e85-d5d999212250 '''
+
+                    sh '''
+                        mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=springboot-demo-app \
+                        -Dsonar.projectName='springboot-demo-app' \
+                        -Dsonar.host.url=http://a7875a6e4d9de4c6fb298514e735c940-318779241.us-east-1.elb.amazonaws.com:9000 \
+                        -Dsonar.token=sqp_84b9b614784c5d60b9b0d79ddd21a1e941a5f03b
+
+                    '''
+                }
+            }
+        }
         
-        // stage("Quality Gate") {
-        //     steps {
-        //       timeout(time: 1, unit: 'HOURS') {
-        //         waitForQualityGate abortPipeline: true
-        //       }
-        //     }
-        // }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
 
         stage("OWASP Dependency Check"){
             steps{
