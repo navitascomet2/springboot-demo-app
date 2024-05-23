@@ -1,3 +1,17 @@
+### Define parameters ####
+
+properties([[
+    $class: 'ParametersDefinitionProperty',
+    parameterDefinitions: [
+        [
+            $class: 'PersistentStringParameterDefinition',
+            name: 'accountId',
+            description: 'String'
+        ]
+    ]
+]])
+
+
 pipeline {
     agent any
 
@@ -12,12 +26,12 @@ pipeline {
         registry = "891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app"
     }
 
-    properties([
-        parameters([
-            string(name: "accountid", defaultValue: '')
-        ])
+    // properties([
+    //     parameters([
+    //         string(name: "accountid", defaultValue: '')
+    //     ])
 
-    ])
+    // ])
     
     stages{
         
@@ -83,6 +97,8 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build registry
+                    // echo "account number is ${params.accountid}"
+                    sh 'echo "accountId parameter: ${params.accountId}"'
                 }
                 // sh "docker build -t demoapp ."
 
