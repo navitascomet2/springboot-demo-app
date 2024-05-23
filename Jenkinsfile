@@ -29,10 +29,7 @@ pipeline {
         string(name: 'accountid', defaultValue: '', description: 'aws account id')
     }
 
-    // parameters {
-    //     choice(name: "accountid", choices: ['REPO1', 'REPO2', 'REPO3'])
-    // }
-    
+        
     stages{
         
         stage("Git Checkout"){
@@ -113,13 +110,7 @@ pipeline {
                     sh 'docker push 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest'
                 }
             }
-        }
-
-        post {
-            always {
-                cleanWs()
-            }
-        }
+        }        
 
         
         // docker tag springboot-demo-app:latest 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest
@@ -149,4 +140,10 @@ pipeline {
         //     }
         // }
     }
+
+    post {
+            always {
+                cleanWs()
+            }
+        }
 }
