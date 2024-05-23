@@ -97,7 +97,7 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build registry
-                    // echo "account number is ${params.accountid}"
+                    echo "account number is ${params.accountid}"
                     // sh 'echo "accountId parameter: ${params.accountId}"'
                 }
                 // sh "docker build -t demoapp ."
