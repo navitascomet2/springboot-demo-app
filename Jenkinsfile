@@ -1,5 +1,9 @@
 pipeline {
-    agent any 
+    agent any
+
+    environment {
+        registry = "891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app"
+    }
     
     tools{
         jdk 'jdk17'
@@ -72,7 +76,10 @@ pipeline {
 
         stage ("Docker build") {
             steps {
-                sh "docker build -t demoapp ."
+                script {
+                    dockerImage = docker.build registry
+                }
+                // sh "docker build -t demoapp ."
 
             }
         }
