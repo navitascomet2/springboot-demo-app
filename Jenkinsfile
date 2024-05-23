@@ -97,7 +97,7 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build registry
-                    // echo "account number is ${params.accountid}"
+                    echo "account number is ${params.accountid}"
                     // sh 'echo "accountId parameter: ${params.accountId}"'
                 }
                 // sh "docker build -t demoapp ."
@@ -112,6 +112,12 @@ pipeline {
                     // sh 'docker tag springboot-demo-app:latest 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest'
                     sh 'docker push 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest'
                 }
+            }
+        }
+
+        post {
+            always {
+                cleanWs()
             }
         }
 
