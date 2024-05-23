@@ -1,5 +1,3 @@
-### Define parameters ####
-
 properties([[
     $class: 'ParametersDefinitionProperty',
     parameterDefinitions: [
