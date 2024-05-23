@@ -14,7 +14,7 @@ pipeline {
         
         stage("Git Checkout"){
             steps{
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/navitascomet2/springboot-demo-app.git'
+                git branch: 'develop', changelog: false, poll: false, url: 'https://github.com/navitascomet2/springboot-demo-app.git'
             }
         }
 
