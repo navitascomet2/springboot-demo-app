@@ -1,13 +1,13 @@
-properties([[
-    $class: 'ParametersDefinitionProperty',
-    parameterDefinitions: [
-        [
-            $class: 'PersistentStringParameterDefinition',
-            name: 'accountId',
-            description: 'String'
-        ]
-    ]
-]])
+// properties([[
+//     $class: 'ParametersDefinitionProperty',
+//     parameterDefinitions: [
+//         [
+//             $class: 'PersistentStringParameterDefinition',
+//             name: 'accountId',
+//             description: 'String'
+//         ]
+//     ]
+// ]])
 
 
 pipeline {
@@ -24,12 +24,14 @@ pipeline {
         registry = "891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app"
     }
 
-    // properties([
-    //     parameters([
-    //         string(name: "accountid", defaultValue: '')
-    //     ])
 
-    // ])
+    parameters {
+        string(name: 'accountid', defaultValue: '', description: 'aws account id')
+    }
+
+    // parameters {
+    //     choice(name: "accountid", choices: ['REPO1', 'REPO2', 'REPO3'])
+    // }
     
     stages{
         
