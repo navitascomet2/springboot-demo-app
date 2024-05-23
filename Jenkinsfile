@@ -50,12 +50,6 @@ pipeline {
         //     }
         // }
 
-        // stage("OWASP Dependency Check"){
-        //     steps{
-        //         dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
-        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        //     }
-        // }
 
         stage('OWASP Dependency-Check Vulnerabilities') {
 
@@ -70,11 +64,18 @@ pipeline {
             }
         }
         
-        //  stage("Build"){
-        //     steps{
-        //         sh " mvn clean install"
-        //     }
-        // }
+         stage("Build"){
+            steps{
+                sh " mvn clean install"
+            }
+        }
+
+        stage ("Docker build") {
+            steps {
+                sh "docker build -t demoapp ."
+
+            }
+        }
         
         // stage("Docker Build & Push"){
         //     steps{
