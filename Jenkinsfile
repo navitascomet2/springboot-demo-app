@@ -115,6 +115,12 @@ pipeline {
             }
         }
 
+        post {
+            always {
+                cleanWs()
+            }
+        }
+
         
         // docker tag springboot-demo-app:latest 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest
         
