@@ -25,9 +25,9 @@ pipeline {
     }
 
 
-    // parameters {
-    //     string(name: 'accountid', defaultValue: '', description: 'aws account id')
-    // }
+    parameters {
+        string(name: 'accountid', defaultValue: '', description: 'aws account id')
+    }
 
     // parameters {
     //     choice(name: "accountid", choices: ['REPO1', 'REPO2', 'REPO3'])
