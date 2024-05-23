@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        registry = "891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app"
-    }
-    
+        
     tools{
         jdk 'jdk17'
         maven 'Maven3'
@@ -12,6 +9,7 @@ pipeline {
     
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
+        registry = "891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app"
     }
     
     stages{
