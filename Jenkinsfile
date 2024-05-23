@@ -6,11 +6,18 @@ pipeline {
         jdk 'jdk17'
         maven 'Maven3'
     }
-    
+        
     environment {
         SCANNER_HOME=tool 'sonar-scanner'
         registry = "891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app"
     }
+
+    properties([
+        parameters([
+            string(name: "accountid", defaultValue: '')
+        ])
+
+    ])
     
     stages{
         
@@ -86,7 +93,7 @@ pipeline {
             steps {
                 script {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 891377337960.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag springboot-demo-app:latest 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest'
+                    // sh 'docker tag springboot-demo-app:latest 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest'
                     sh 'docker push 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest'
                 }
             }
