@@ -95,6 +95,8 @@ pipeline {
                 script {
                     dockerImage = docker.build registry
                     echo "account number is ${params.accountid}"
+                    echo "grype scanner starts scanning of the image"
+                    sh 'grype 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest --scope all-layers'
                     // sh 'echo "accountId parameter: ${params.accountId}"'
                 }
                 // sh "docker build -t demoapp ."
