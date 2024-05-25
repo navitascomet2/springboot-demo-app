@@ -102,6 +102,12 @@ pipeline {
             }
         }
 
+        stage ("Anchore-Grype-ImageScan") {
+            steps {
+                sh 'grype 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest --scope all-layers'
+            }
+        }
+
         stage ("Docker Image Push ECR"){
             steps {
                 script {
