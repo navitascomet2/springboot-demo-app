@@ -53,9 +53,10 @@ pipeline {
         
         stage("Quality Gate") {
             steps {
-              timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
+                sleep(30)
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
 
@@ -88,7 +89,7 @@ pipeline {
 
             }
         }
-        
+
         stage ("Anchore-Grype-ImageScan") {
             steps {
                 sh 'grype 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest --scope all-layers'
