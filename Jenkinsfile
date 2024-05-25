@@ -104,7 +104,7 @@ pipeline {
             }
         }
 
-        stage (Shell Command) {
+        stage ("Shell Command") {
             steps {
                 sh '''
                     echo "bash command"
