@@ -1,14 +1,3 @@
-// properties([[
-//     $class: 'ParametersDefinitionProperty',
-//     parameterDefinitions: [
-//         [
-//             $class: 'PersistentStringParameterDefinition',
-//             name: 'accountId',
-//             description: 'String'
-//         ]
-//     ]
-// ]])
-
 
 pipeline {
     agent any
@@ -25,9 +14,9 @@ pipeline {
     }
 
 
-    parameters {
-        string(name: 'accountid', defaultValue: '', description: 'aws account id')
-    }
+    // parameters {
+    //     string(name: 'accountid', defaultValue: '', description: 'aws account id')
+    // }
 
         
     stages{
@@ -62,13 +51,13 @@ pipeline {
             }
         }
         
-        // stage("Quality Gate") {
-        //     steps {
-        //       timeout(time: 5, unit: 'MINUTES') {
-        //         waitForQualityGate abortPipeline: true
-        //       }
-        //     }
-        // }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 5, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
 
 
         stage('OWASP Dependency-Check Vulnerabilities') {
@@ -94,16 +83,14 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build registry
-                    echo "account number is ${params.accountid}"
-                    echo "grype scanner starts scanning of the image"
-                    sh 'grype 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest --scope all-layers'
-                    // sh 'echo "accountId parameter: ${params.accountId}"'
-                }
-                // sh "docker build -t demoapp ."
+                    // echo "account number is ${params.accountid}"          
+                }            
 
             }
         }
 
+<<<<<<< HEAD
+=======
         stage ("Shell Command") {
             steps {
                 sh '''
@@ -115,6 +102,7 @@ pipeline {
             }
         }
 
+>>>>>>> e30d6f1758ae6ccbcf0ff7b1f947593e420221c7
         stage ("Anchore-Grype-ImageScan") {
             steps {
                 sh 'grype 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest --scope all-layers'
@@ -133,30 +121,16 @@ pipeline {
         }        
 
         
-        // docker tag springboot-demo-app:latest 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest
-        
-        // stage("Docker Build & Push"){
-        //     steps{
-        //         script{
-        //            withDockerRegistry(credentialsId: '58be877c-9294-410e-98ee-6a959d73b352', toolName: 'docker') {
-                        
-        //                 sh "docker build -t image1 ."
-        //                 sh "docker tag image1 adijaiswal/pet-clinic123:latest "
-        //                 sh "docker push adijaiswal/pet-clinic123:latest "
-        //             }
-        //         }
-        //     }
-        // }
-        
+               
         // stage("TRIVY"){
         //     steps{
         //         sh " trivy image adijaiswal/pet-clinic123:latest"
         //     }
         // }
         
-        // stage("Deploy To Tomcat"){
+        // stage("Deploy To EKS cluster"){
         //     steps{
-        //         sh "cp  /var/lib/jenkins/workspace/CI-CD/target/petclinic.war /opt/apache-tomcat-9.0.65/webapps/ "
+        //         sh "kubectl apply -f deployment.yaml"
         //     }
         // }
     }
