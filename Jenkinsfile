@@ -57,7 +57,7 @@ pipeline {
                     sh "mvn clean package"
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springboot-demo-app \
                     -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=springboot-sonar '''                    
+                    -Dsonar.projectKey=springboot-demo-app '''                    
                 }
             }
         }
