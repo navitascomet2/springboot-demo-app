@@ -123,8 +123,19 @@ pipeline {
     }
 
     post {
-            always {
-                cleanWs()
-            }
+        always {
+            emailext attachLog:true,
+                body: "Pipeline ${currentBuild.fullDisplayName} is with status ${currentBuild.currentResult}",
+                from: "no-reply@cicd-user",
+                replyTo: 'protosaditya@gmail.com',
+                subject: "JENKINS DEPLOYMENT ${BUILD_NUMBER}, branch develop",
+                to: "protosaditya@gmail.com",
+                recipeintProvider: [requester(), culprits()]
+            cleanWs()
+
+           }
+            // always {
+            //     cleanWs()
+            // }
         }
 }
