@@ -53,9 +53,10 @@ pipeline {
         
         stage("Quality Gate") {
             steps {
-              timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
+                sleep(10)
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
 
@@ -89,20 +90,6 @@ pipeline {
             }
         }
 
-<<<<<<< HEAD
-=======
-        stage ("Shell Command") {
-            steps {
-                sh '''
-                    echo "bash command"
-                    docker images
-                    echo "docker image lists"
-
-                '''
-            }
-        }
-
->>>>>>> e30d6f1758ae6ccbcf0ff7b1f947593e420221c7
         stage ("Anchore-Grype-ImageScan") {
             steps {
                 sh 'grype 891377337960.dkr.ecr.us-east-1.amazonaws.com/springboot-demo-app:latest --scope all-layers'
@@ -136,8 +123,19 @@ pipeline {
     }
 
     post {
-            always {
-                cleanWs()
-            }
+        always {
+            emailext attachLog:true,
+                body: "Pipeline ${currentBuild.fullDisplayName} is with status ${currentBuild.currentResult}",
+                from: "no-reply@cicd-user",
+                replyTo: 'protosaditya@gmail.com',
+                subject: "JENKINS DEPLOYMENT ${BUILD_NUMBER}, branch develop",
+                to: "protosaditya@gmail.com",
+                recipeintProvider: [requester(), culprits()]
+            cleanWs()
+
+           }
+            // always {
+            //     cleanWs()
+            // }
         }
 }
